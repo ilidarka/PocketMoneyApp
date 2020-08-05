@@ -1,0 +1,82 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="TransactionsController">
+    
+    <aura:attribute name="transactionWrapper" type="object"/>
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+    <div class="slds-box slds-theme_default slds-box_xx-small">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_10-of-12">
+                <div class="demo-only" style="width:30rem">
+                    <article class="slds-tile slds-media">
+                        <div class="slds-media__body">
+                            <h3 class="slds-tile__title slds-truncate" title="{!v.transactionWrapper.userName}">
+                                <p>{!v.transactionWrapper.userName}</p>
+                            </h3>
+                            <div class="slds-tile__detail">
+                                <dl class="slds-list_horizontal slds-wrap">
+                                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First Label">Email:</dt>
+                                    <dd class="slds-item_detail slds-truncate" title="Description for first label">{!v.transactionWrapper.userEmail}</dd>
+                                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First Label">Addres:</dt>
+                                    <dd class="slds-item_detail slds-truncate" title="Description for first label">{!v.transactionWrapper.userAdress}</dd>
+                                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First Label">Phone:</dt>
+                                    <dd class="slds-item_detail slds-truncate" title="Description for first label">{!v.transactionWrapper.userMobile}</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-p-top_large slds-p-left_x-large">
+                <div class="slds-button-group" role="group">
+                    <button class="slds-button slds-button_neutral" onclick="{!c.createRecord}">New Transaction</button>
+                </div>
+            </div>
+            <div class="slds-col slds-size_12-of-12">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Transaction Name">Transaction Name</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Transaction Date">Transaction Date</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Money">Money</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Operation">Operation</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.transactionWrapper.userTransactions}" var="tr">
+                            <tr class="slds-hint-parent">
+                                <th data-label="Transaction Name" scope="row">
+                                    <div class="slds-truncate" title="{!tr.Name}">
+                                        <a href="{!'/lightning/r/Transaction__c/' + tr.Id + '/view'}" target="_blank">{!tr.Name}</a>
+                                    </div>
+                                </th>
+                                <td data-label="Transaction Date">
+                                    <div class="slds-truncate" title="{!tr.Transaction_Date__c}">{!tr.Transaction_Date__c}</div>
+                                </td>
+                                <td data-label="Money">
+                                    <div class="slds-truncate" title="{!tr.Money__c}">{!tr.Money__c}</div>
+                                </td>
+                                <td data-label="Opearion">
+                                    <div class="slds-truncate" title="{!tr.Opearion__c}">{!tr.Operation__c}</div>
+                                </td>
+                                <td data-label="Buttons">
+                                    <lightning:button label="Edit" value="{!tr.Id}" variant="brand" onclick="{!c.editRecord}"/>
+                                    <lightning:button label="Delete" value="{!tr.Id}" variant="brand" onclick="{!c.deleteRecord}"/>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>    
+            </div>
+        </div>
+    </div>
+    
+</aura:component>
